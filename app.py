@@ -763,10 +763,11 @@ if st.session_state.meeting_id and st.session_state.meeting_text:
         "name": st.session_state.meeting_name, "text": st.session_state.meeting_text}
 
 with st.sidebar:
-    robot = Path(__file__).resolve().parent / "Docs" / "aivle_robot.png"
-    if robot.exists():
-        st.image(str(robot), width=160)
-    st.title("AIVLE")
+    logo = Path(__file__).resolve().parent / "Docs" / "logo.png"
+    if logo.exists():
+        st.image(str(logo), width=220)
+    else:
+        st.title("AIVLE")
     st.caption("음성인식 AI 개인비서")
     if st.button("대화 초기화"):
         version = st.session_state.input_version + 1
@@ -835,7 +836,7 @@ with chat_tab:
         if not st.session_state.messages:
             st.info("안녕하세요, 김 대리님. 무엇을 도와드릴까요?")
         for message in st.session_state.messages:
-            with st.chat_message(message["role"]):
+            with st.chat_message(message["role"], avatar=str(Path(__file__).resolve().parent / "Docs" / "aivle_robot_head.png") if message["role"] == "assistant" and (Path(__file__).resolve().parent / "Docs" / "aivle_robot_head.png").exists() else None):
                 st.markdown(message["content"])
 
     question = chat_input.strip() if chat_input else ""
@@ -871,7 +872,7 @@ with chat_tab:
                                         if result["status"] == "success" else result.get("message", result.get("error", "처리 결과를 확인해주세요.")))
                 st.session_state.messages.append({"role": "assistant", "content": answer})
                 with conversation:
-                    with st.chat_message("assistant"):
+                    with st.chat_message("assistant", avatar=str(Path(__file__).resolve().parent / "Docs" / "aivle_robot_head.png") if (Path(__file__).resolve().parent / "Docs" / "aivle_robot_head.png").exists() else None):
                         st.markdown(answer)
                 try:
                     st.session_state.reply_audio = make_speech(client, answer)
