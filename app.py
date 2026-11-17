@@ -905,9 +905,12 @@ div[data-testid="stMarkdownContainer"] a {color:var(--mint-dark);}
 /* 대화 : 메신저형 말풍선 (내 질문 = 오른쪽 연민트, 답변 = 흰 카드 + 민트 선) */
 div[data-testid="stElementContainer"]:has(.role-user), div[data-testid="stElementContainer"]:has(.role-bot) {display:none;}
 div[data-testid="stChatMessage"] {background:transparent !important; padding:2px 0 !important; gap:10px;}
-div[data-testid="stChatMessage"]:has(.role-user) {flex-direction:row-reverse;}
+div[data-testid="stChatMessage"]:has(.role-user) {
+  display:flex !important; flex-direction:row-reverse !important;
+  justify-content:flex-start !important; align-items:flex-start !important;
+  width:100% !important; box-sizing:border-box;}
 div[data-testid="stChatMessage"]:has(.role-user) div[data-testid="stChatMessageContent"] {
-  flex:0 1 auto; max-width:78%; background:var(--mint-soft); border:1px solid var(--mint-line);
+  flex:0 1 auto !important; width:fit-content !important; min-width:0 !important; max-width:78% !important; margin:0 !important; text-align:left; overflow-wrap:anywhere; background:var(--mint-soft); border:1px solid var(--mint-line);
   border-radius:16px 4px 16px 16px; padding:10px 14px;}
 div[data-testid="stChatMessage"]:has(.role-bot) div[data-testid="stChatMessageContent"] {
   background:#FFFFFF; border:1px solid var(--line); border-left:3px solid var(--mint);
@@ -1084,7 +1087,7 @@ with tabs[0]:
         with st.container(border=True):
             st.markdown('<div class="panel-title">공식 채널</div>', unsafe_allow_html=True)
             for label, url, icon in OFFICIAL_LINKS:
-                st.link_button(label, url, icon=icon, width="stretch", type="tertiary")
+                st.link_button(label, url, icon=icon, width="stretch", type="secondary")
 
 # ── 탭 2 : 개인 맞춤 학습 지원 ──
 with tabs[1]:
